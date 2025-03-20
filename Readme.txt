@@ -10,8 +10,6 @@
 
 # IST Energy Forecast ⚡🌍
 
-![IST Energy Forecast](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
-
 ## 🌍 Scientific Overview
 This project systematically prepares and analyzes the energy consumption data of the **South Tower** of **Instituto Superior Técnico (IST)** for the years **2017 and 2018**. The methodology follows a structured **data-driven approach**, including:
 
