@@ -9,3 +9,5 @@ protobuf==6.30.1
 scikit_learn==1.6.1
 torch==2.5.1
 xgboost==3.0.0
+gunicorn==20.1.0
+
