@@ -1,0 +1,501 @@
+<!-- feature_selection.html -->
+<!-- Custom styles for the modal close button -->
+<style>
+  .close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: rgb(128, 128, 128);
+    cursor: pointer;
+  }
+  .close-modal:hover {
+    color: red;
+  }
+  /* Optional: style the list of clickable items */
+  .feature-list li {
+    margin-bottom: 0.5rem;
+  }
+  .feature-list li a {
+    text-decoration: underline;
+    color: #5a5a5a;
+    cursor: pointer;
+  }
+  .feature-list li a:hover {
+    color: #868791;
+  }
+</style>
+
+<section id="feature-selection-content" style="padding-bottom: 0px;">
+  <div class="accordion" id="accordionMain">
+    <!-- 1. Preliminary Feature Selection -->
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="headingPreliminary">
+        <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapsePreliminary"
+                aria-expanded="false" aria-controls="collapsePreliminary">
+          Preliminary Feature Selection
+        </button>
+      </h3>
+      <div id="collapsePreliminary" class="accordion-collapse collapse"
+           aria-labelledby="headingPreliminary" data-bs-parent="#accordionMain">
+        <div class="accordion-body">
+          <ul class="list-unstyled feature-list">
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalIntuition">Intuition + Correlation Methods</a></li>
+            <li>
+              Filter Methods (K-Best)
+              <ul class="list-unstyled ms-3">
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalFtest">F-Test</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalMutualReg">Mutual Information</a></li>
+              </ul>
+            </li>
+            <li>
+              Wrapper Methods
+              <ul class="list-unstyled ms-3">
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalRFE">Recursive Feature Elimination</a></li>
+              </ul>
+            </li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalDataComplete">Drop Features and Complete Data</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Final Feature Selection -->
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="headingFinalSelection">
+        <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapseFinalSelection"
+                aria-expanded="false" aria-controls="collapseFinalSelection">
+          Final Feature Selection
+        </button>
+      </h3>
+      <div id="collapseFinalSelection" class="accordion-collapse collapse"
+           aria-labelledby="headingFinalSelection" data-bs-parent="#accordionMain">
+        <div class="accordion-body">
+          <ul class="list-unstyled feature-list">
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalFeaturesAdd">Add new Features</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalCorr">Correlation</a></li>
+
+            <li>
+              Filter Methods (K-Best)
+              <ul class="list-unstyled ms-3">
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalFtest2">F-Test</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalMutualReg2">Mutual Information</a></li>
+              </ul>
+            </li>
+            <li>
+              Wrapper Methods
+              <ul class="list-unstyled ms-3">
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalRFE2">Recursive Feature Elimination</a></li>
+              </ul>
+            </li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalEnsemble">Ensemble Methods (Random Forest)</a></li>           
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+ 
+  
+  <!-- Modal for Intuition + Correlation Methods -->
+  <div class="modal fade" id="modalIntuition" tabindex="-1" aria-labelledby="modalIntuitionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 70%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalIntuitionLabel" style="font-family: var(--heading-font);">
+            Intuition + Correlation Details
+          </h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body p-0" style="font-family: var(--default-font);">
+          <p style="margin-top: 20px; margin-left: 50px; margin-right: 50px;">
+            WindSpeed_m/s and WindGust_m/s (with a correlation of 0.97) are redundant. Additionally, there is a strong correlation between rain_mm/h and rain_day.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Next, let's consider whether these features are meaningful. For a large building like the South Tower, wind is important because it affects ventilation and internal air pressure. If the tower relies on natural ventilation, wind speed significantly influences airflow.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Regarding rain, note that the solar panels were installed after 2019, so rain is likely not a critical factor. The only potential issue would be rain covering the photovoltaic cells, which does not occur here. Therefore, this feature can be disregarded.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Additionally, HR and solarRad, as well as HR and temperature, exhibit an inverse correlation. Increased solar radiation dries out the air, reducing humidity, while warmer temperatures tend to lower humidity levels.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Pressure is not a significant factor unless the South Tower includes pressure-controlled rooms. However, the pressure graph shows minimal fluctuations, indicating that energy consumption is not heavily dependent on pressure.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Now, let's examine the graphs to address the missing data problem.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            The wind speed data contains an unusually high number of zero values, which is unlikely since a complete absence of wind is improbable. This may indicate sensor malfunctions or calibration issues. Moreover, the data appears highly random, suggesting that imputing missing values might not be feasible. Given the prevalence of zeros and missing data, it may be best to drop this feature—even if it could be important—especially since other features are much stronger predictors of energy consumption.
+          </p>
+          
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Ultimately, we retain temperature, solar radiation, and HR because these features exhibit predictable patterns. This consistency allows us to handle missing data through interpolation or by using historical information.
+          </p>
+          
+          <div class = "fig" style="text-align: center;">
+            <iframe src="/dash/correlation/" style="width: 80%; height: 700px; border: none; "></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for F-Test -->
+  <div class="modal fade" id="modalFtest" tabindex="-1" aria-labelledby="modalFtestLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFtestLabel" style="font-family: var(--heading-font);">F-Test Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font); ">
+        <p style="margin-left: 50px; margin-top: 20px; margin-right: 50px;"> This method confirms my guess: that temperature, solar radiation, and humidity are the most important features.</p>
+        <p style="margin-left: 50px; margin-right: 50px;"> In this case, it says solar radiation is the most important feature, then temperature and then humidity.</p>
+
+        <div class = "fig" style="text-align: center;">
+          <iframe src="/dash/kbest/" style="width:80%; height:700px; border:none; "></iframe>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal for Mutual Regression -->
+  <div class="modal fade" id="modalMutualReg" tabindex="-1" aria-labelledby="modalMutualRegLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalMutualRegLabel" style="font-family: var(--heading-font);">Mutual Regression Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font);">
+          <p style="margin-left: 50px; margin-top: 20px; margin-right: 50px;"> This method confirms my guess: that temperature, solar radiation, and humidity are the most important features.</p>
+          <p style="margin-left: 50px; margin-right: 50px;"> In this case, the most important features follow the same order as in F-Test, saying that solar radiation is the most important feature, then temperature and then humidity.</p>
+        <div class = "fig" style="text-align: center;">
+          <iframe src="/dash/mutualinfo/" style="width:80%; height:700px; border:none;"></iframe>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for RFE  -->
+  <div class="modal fade" id="modalRFE" tabindex="-1" aria-labelledby="modalRFELabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalRFELabel" style="font-family: var(--heading-font);">Recursive Feature Elimination Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font);">
+        <p style="margin-left: 50px; margin-top: 20px; margin-right: 50px;"> This method says that the most important features are: pressure, solar radiation, and humidity are the most important features.</p>
+        <p style="margin-left: 50px; margin-right: 50px;"> Differently from the other two methods, the humidity takes the place of temperature on the top 3. </p>
+        <p style="margin-left: 50px; margin-right: 50px;"> The order now becomes: humidity > pressure > solar radiation. </p>
+
+
+        <div class = "fig" style="text-align: center;">
+          <iframe src="/dash/rfe/" style="width:80%; height:600px; border:none;"></iframe>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Data Cleaned -->
+  <div class="modal fade" id="modalDataComplete" tabindex="-1" aria-labelledby="modalDataCompleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDataCompleteLabel" style="font-family: var(--heading-font);">Drop Features and Complete Data Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font);">
+
+          <p style="margin-left: 50px; margin-top: 20px; margin-right: 50px;">
+            By dropping the irrelevant features and retaining only humidity, pressure, and solar radiation, we are left with graphs that need to be completed.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            I decided to use the following criteria to fill in the missing data:
+          </p>
+          <ul class="methods-list" style="margin-left: 50px; margin-right: 50px;">
+            <li>Gaps shorter than 5 hours: Linear interpolation;</li>
+            <li>Gaps longer than 5 hours but shorter than 24 hours: Fill using data from the previous or next day;</li>
+            <li>Gaps longer than 24 hours: Fill using data from the previous or following year.</li>
+          </ul>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            In cases where these methods were not applicable, we simply dropped the data.
+          </p>
+          
+
+        <div class = "fig" style="text-align: center;">
+          <iframe src="/dash/plot_cleaned_completed/" style="width:80%; height:600px; border:none;"></iframe>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal for Add New Features -->
+  <div class="modal fade" id="modalFeaturesAdd" tabindex="-1" aria-labelledby="modalFeaturesAddLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFeaturesAddLabel" style="font-family: var(--heading-font);">Add New Features Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font);">
+          <p style="margin-left: 50px; margin-top: 20px; margin-right: 50px; margin-bottom: 20px;">
+            I also added features that I believed could be important. Their descriptions are provided in the following table.
+          </p>          
+
+          <div class="d-flex justify-content-center">
+            <table class="table table-striped table-sm text-center table-hover" style="width: auto; margin: 0;">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Explanation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Weekday</td>
+                  <td>Day of week (0=Mon, …, 6=Sun) captures weekly patterns.</td>
+                </tr>
+                <tr>
+                  <td>Is_Weekend</td>
+                  <td>1 if Sat/Sun, 0 otherwise.</td>
+                </tr>
+                <tr>
+                  <td>Hour_sin</td>
+                  <td>Sine transform of hour captures daily cycles.</td>
+                </tr>
+                <tr>
+                  <td>Hour_cos</td>
+                  <td>Cosine transform of hour, completes cyclic encoding.</td>
+                </tr>
+                <tr>
+                  <td>Power_kW_lag_1h</td>
+                  <td>Consumption 1h ago, captures short-term trends.</td>
+                </tr>
+                <tr>
+                  <td>Power_kW_lag_2h</td>
+                  <td>Consumption 2h ago, reflects recent influence.</td>
+                </tr>
+                <tr>
+                  <td>Power_kW_lag_24h</td>
+                  <td>Consumption 24h ago, shows daily repetition.</td>
+                </tr>
+                <tr>
+                  <td>HDH</td>
+                  <td>Heating Degree Hours: max(0,16-temp) indicates heating needs.</td>
+                </tr>
+                <tr>
+                  <td>CDH</td>
+                  <td>Cooling Degree Hours: max(0,temp-25) indicates cooling needs.</td>
+                </tr>
+                <tr>
+                  <td>HDH_squared</td>
+                  <td>Square of HDH models nonlinear cold effects.</td>
+                </tr>
+                <tr>
+                  <td>CDH_squared</td>
+                  <td>Square of CDH models nonlinear heat effects.</td>
+                </tr>
+                <tr>
+                  <td>CDH_Humidity</td>
+                  <td>Interaction of CDH &amp; humiditycaptures combined effects.</td>
+                </tr>
+                <tr>
+                  <td>log_temp</td>
+                  <td>Log of temperature captures multiplicative relationships.</td>
+                </tr>
+                <tr>
+                  <td>temp_squared</td>
+                  <td>Square of temperature captures curvature in effects.</td>
+                </tr>
+                <tr>
+                  <td>holiday</td>
+                  <td>Holiday (bool) according to the academic calendar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for F-Test 2 -->
+  <div class="modal fade" id="modalFtest2" tabindex="-1" aria-labelledby="modalFtest2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFtest2Label" style="font-family: var(--heading-font);">F-Test Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font);">
+
+          <p style="margin-left: 50px; margin-right: 50px;  margin-top: 20px;">
+            This model emphasizes the lag features, Hour_cos, the solar radiation, the temperature features (normal, log and squared) and the the humadity.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            The other features have a low F-score. 
+          </p>
+
+        <div class = "fig" style="text-align: center;">
+          <iframe src="/dash/clean_f_test/" style="width:70%; height:500px; border:none;"></iframe>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal for Mutual Information 2 -->
+    <div class="modal fade" id="modalMutualReg2" tabindex="-1" aria-labelledby="modalMutualReg2Label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+        <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalMutualReg2Label" style="font-family: var(--heading-font);">Mutual Information Details</h5>
+            <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body" style="font-family: var(--default-font);">
+
+            <p style="margin-left: 50px; margin-right: 50px;  margin-top: 20px;">
+              Once again the most important features are the lag features. Then instead of Hour_cos we get Hour, then solar radiation, the temperature features (normal, log and squared), then the Hour_cos, Month, HR and then a few more.
+            </p>
+            <p style="margin-left: 50px; margin-right: 50px;">
+              The other features have a low F-score. 
+            </p>
+
+
+
+            <div class = "fig" style="text-align: center;">
+            <iframe src="/dash/clean_mutualinfo/" style="width: 70%; height:600px; border:none;"></iframe>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+      <!-- Modal for RFE 2 -->
+  <div class="modal fade" id="modalRFE2" tabindex="-1" aria-labelledby="modalRFE2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+      <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalRFE2Label" style="font-family: var(--heading-font);">Drop Features and Complete Data Details</h5>
+          <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" style="font-family: var(--default-font); ">
+
+          <p style="margin-left: 50px; margin-right: 50px;  margin-top: 20px;">
+            With this method we get completely different results. The lag features are not the most important features. The solar radiation is the worst feature.
+            <br> We also see that the holiday feature is now a very good feature. The best one is the Hour_cos, the temperature features and the Is_Weekend feature.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            This shows that these methods can give us a good understanding of the features contributions but we should always have a critical look and follow what makes more sense.
+          </p>
+
+          <div class = "fig" style="text-align: center;">
+            <iframe src="/dash/clean_rfe/" style="width:70%; height:600px; border:none;"></iframe>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal for Ensemble -->
+    <div class="modal fade" id="modalEnsemble" tabindex="-1" aria-labelledby="modalEnsembleLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 60%;">
+        <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEnsembleLabel" style="font-family: var(--heading-font);">Ensemble Methods (Random Forest) Details</h5>
+            <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body" style="font-family: var(--default-font); ">
+            
+          <p style="margin-left: 50px; margin-right: 50px;  margin-top: 20px;">
+            This method gives similar results to F-Test and Mutual Information. The lag and hour features are the most important ones, with the lag of 1h feature being way more important than any other.
+            Then we have Weekday and the meteorological features.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            The other features have a much lower importance score.
+          </p>
+
+          <div class = "fig" style="text-align: center;">
+            <iframe src="/dash/clean_rf/" style="width:70%; height:600px; border:none;"></iframe>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    
+    <!-- Modal for Correlation 2 -->
+    <div class="modal fade" id="modalCorr" tabindex="-1" aria-labelledby="modalCorrLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 70%;">
+        <div class="modal-content" style="background-color: var(--background-color); color: var(--default-color);">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCorrLabel" style="font-family: var(--heading-font);">Correlation Details</h5>
+            <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body" style="font-family: var(--default-font);">
+
+          <p style="margin-left: 50px; margin-right: 50px;  margin-top: 20px;">
+            The features more correlated with the power are the 3 power lags, as we could expected. 
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Hour_cos exhibits a high correlation with power. Interestingly, neither Hour nor Hour_sin shows a strong correlation. Typically, both Hour_cos and Hour_sin are used together to fully describe the hourly cycle.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Additionally, the other time-related features (Month, Day, and Year) display a weak correlation with power, suggesting they may not be as significant.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Observing temperature over time reveals that its relationship with time is not linear. Consequently, incorporating features such as log_temp or temp_squared can help capture this non-linear behavior.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            The correlations of these three temperature features with power are moderately high and quite similar, indicating that they relate to power consumption in a comparable way. Choosing between them may simply come down to trial and error.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            Subsequently, I added heating degree hours (HDH) and cooling degree hours (CDH), since power consumption typically rises below 16°C and above 25°C. I also applied non-linear transformations to these features to capture any non-linear relationships and introduced CDH_Humidity, which is the product of CDH and HR.
+          </p>
+          <p style="margin-left: 50px; margin-right: 50px;">
+            The correlation of these features with power is moderate for HDH, HDH_squared, and CDH_Humidity, and low for the others. <br>
+            The correlation of holiday with power is also quite low, something that I wasn't expecting. <br>
+            Weekday and Is_Weekend also show a moderate correlation with power, suggesting that they could be important features. <br>
+            The correlations among the meteorological features were already analyzed in the previous correlation heat map.
+          </p>
+          
+
+          <div class = "fig" style="text-align: center;">
+            <iframe src="/dash/clean_corr/" style="width:70%; height:1200px; border:none; "></iframe>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</section>

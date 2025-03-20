@@ -1,0 +1,301 @@
+<!-- validation.html -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<section id="validation-content" style="margin-top: 0; padding-top: 0px;">
+    <p style="margin-bottom: 40px;">
+        Overall, we achieved fairly good results. A common rule of thumb is that models with an R² above 0.85 are considered good, and those above 0.90 are excellent. Our models are close to this threshold.<br><br>
+      
+        It’s worth noting that our test set contained some zero-power values, which were clear outliers. As shown in the plots, these zeros led to mispredictions because the model depends heavily on lag features. Without those outliers, both models might have surpassed the R² > 0.90 benchmark.<br><br>
+      
+        Looking at the other metrics, we see relatively high MSE and RMSE, indicating large squared errors. On the other hand, the MAE is around 16 kW, which is not excessive given that much of the dataset has power consumption above 300 kW (meaning the MAE is roughly 5% of those values).<br><br>
+      
+        A positive MBE implies that the model overestimates consumption by an average of about 6 kW (Neural Network) and 3 kW (XGBoost). As for the cvRMSE, models with a value below 10% are typically deemed very good, and our ~18% result suggests it is acceptable.<br><br>
+      
+        Overall, both models perform similarly, with each outperforming the other in certain metrics. However, when examining larger peaks, the Neural Network model appears to predict those peaks more accurately than the XGBoost model.
+      </p>
+      
+    <div class="row" style="overflow: visible;">
+      <!-- XGBoost Flip Card -->
+      <div class="col-md-6 d-flex" style="overflow: visible;">
+        <div class="flip-card w-100" style="overflow: visible;">
+          <div class="flip-card-inner">
+            <!-- Front Side -->
+            <div class="flip-card-front">
+              <div class="card">
+                <div class="card-header text-center position-relative">
+                  <h3 class="mb-0">XGBoost Model</h3>
+                  <div class="button-group">
+                    <button class="flip-btn info-btn" title="View Metrics">
+                      <i class="bi bi-info-circle"></i>
+                    </button>
+                    <button class="flip-btn ai-generate-btn" title="AI Generate Analysis" data-model="XGBoost">
+                      <i class="bi bi-magic"></i>
+                    </button>
+                  </div>
+                </div>                
+                <div class="card-body p-0">
+                  <iframe src="/dash/validation_xgb/" class="iframe-interactive"
+                          style="width:100%; height:600px; border:none;"></iframe>
+                </div>
+              </div>
+            </div>
+            <!-- Back Side -->
+            <div class="flip-card-back">
+              <div class="card">
+                <div class="card-header text-center position-relative">
+                  <h3 class="mb-0">XGBoost Metrics</h3>
+                  <button class="flip-btn back-btn" title="Go Back">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <ul class="metrics-list">
+                    <li>MAE (Mean Absolute Error): 16.76</li>
+                    <li>MBE (Mean Bias Error): 5.00</li>
+                    <li>MSE (Mean Squared Error): 1210.94</li>
+                    <li>RMSE (Root Mean Squared Error): 34.80</li>
+                    <li>cvRMSE (Coefficient of Variation RMSE): 19.02%</li>
+                    <li>NMBE (Normalized Mean Bias Error): 2.73%</li>
+                    <li>R² (Coefficient of Determination): 0.891</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Neural Network Flip Card -->
+      <div class="col-md-6 d-flex" style="overflow: visible;">
+        <div class="flip-card w-100" style="overflow: visible;">
+          <div class="flip-card-inner">
+            <!-- Front Side -->
+            <div class="flip-card-front">
+              <div class="card">
+                <div class="card-header text-center position-relative">
+                  <h3 class="mb-0">Neural Network Model</h3>
+                  <div class="button-group">
+                    <button class="flip-btn info-btn" title="View Metrics">
+                      <i class="bi bi-info-circle"></i>
+                    </button>
+                    <button class="flip-btn ai-generate-btn" title="AI Generate Analysis" data-model="NN">
+                      <i class="bi bi-magic"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="card-body p-0">
+                  <iframe src="/dash/validation_nn/" class="iframe-interactive"
+                          style="width:100%; height:600px; border:none;"></iframe>
+                </div>
+              </div>
+            </div>
+            <!-- Back Side -->
+            <div class="flip-card-back">
+              <div class="card">
+                <div class="card-header text-center position-relative">
+                  <h3 class="mb-0">Neural Network Metrics</h3>
+                  <button class="flip-btn back-btn" title="Go Back">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <ul class="metrics-list">
+                    <li>MAE (Mean Absolute Error): 15.36</li>
+                    <li>MBE (Mean Bias Error): 5.71</li>
+                    <li>MSE (Mean Squared Error): 1084.24</li>
+                    <li>RMSE (Root Mean Squared Error): 32.93</li>
+                    <li>cvRMSE (Coefficient of Variation RMSE): 17.99%</li>
+                    <li>NMBE (Normalized Mean Bias Error): 3.12%</li>
+                    <li>R² (Coefficient of Determination): 0.902</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL WINDOW -->
+    <div class="modal fade" id="aiModal" tabindex="-1" role="dialog" aria-labelledby="aiModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aiModalLabel">AI Analysis (Gemini)</h5>
+          </div>
+          <div class="modal-body">
+            <p id="aiAnalysisContent"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  
+  <style>
+  /* Ensure everything allows overflow */
+  .row,
+  .col-md-6,
+  .flip-card {
+    overflow: visible !important;
+  }
+  
+  /* Flip Card Styles */
+  .flip-card {
+    perspective: 1000px;
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  /* The 'inner' container flips front <-> back */
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 600px; /* Match the iframe height */
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    overflow: visible;
+  }
+  
+  /* Front & Back faces */
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    overflow: visible;
+  }
+  
+  /* Back side gets rotated */
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+  
+  /* Trigger the flip */
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  /* Flip Button Styles */
+  .flip-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+    color: #149ddd; /* Accent color */
+  }
+  
+  /* On hover, emphasize the button */
+  .flip-btn:hover {
+    color: #0d6efd;
+  }
+  
+  /* Metrics List Styles */
+  .metrics-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .metrics-list li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  /* Position the group in the header's top-right corner */
+  .card-header .button-group {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px; /* space between buttons */
+  }
+
+  /* Remove absolute positioning from individual buttons inside the group */
+  .card-header .flip-btn {
+    position: static;
+  }
+
+  </style>
+  
+  <!-- Script to handle flip logic -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Flip to back when info button is clicked
+    document.querySelectorAll('.info-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const flipCard = e.target.closest('.flip-card');
+        flipCard.classList.add('flipped');
+      });
+    });
+    // Flip back to front when back button is clicked
+    document.querySelectorAll('.back-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const flipCard = e.target.closest('.flip-card');
+        flipCard.classList.remove('flipped');
+      });
+    });
+  });
+  </script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('.ai-generate-btn').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+          var modelType = e.currentTarget.getAttribute("data-model");
+          
+          // Reference the modal content element.
+          var analysisElem = document.getElementById('aiAnalysisContent');
+          
+          // Set a dynamic loading indicator with a Bootstrap spinner.
+          analysisElem.innerHTML = `
+            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          `;
+          
+          // Show the modal using Bootstrap 5's native API.
+          var modalEl = document.getElementById('aiModal');
+          var modal = new bootstrap.Modal(modalEl);
+          modal.show();
+          
+          // Fetch the AI-generated content.
+          fetch('/ai_generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model_type: modelType })
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Remove markdown code fences if present.
+            var analysisHTML = data.analysis;
+            if (analysisHTML.startsWith("```html")) {
+              analysisHTML = analysisHTML.replace(/^```html\s*/, "").replace(/```$/, "");
+            }
+            // Replace the spinner with the formatted HTML analysis, fading it in.
+            $("#aiAnalysisContent").hide().html(analysisHTML).fadeIn(500);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            $("#aiAnalysisContent").hide().html("<p>An error occurred while generating the analysis.</p>").fadeIn(500);
+          });
+        });
+      });
+    });
+    </script>
+    

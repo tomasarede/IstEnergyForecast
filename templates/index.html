@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>IST Energy Forecast</title>
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+
+  <style>
+    .iframe-container {
+        width: 100%;
+        height: 600px;
+        border: none;
+    }
+  </style>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <a href="{{ url_for('home') }}" class="logo d-flex align-items-center justify-content-center">
+      <h1 class="sitename">IST Energy Forecast</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="#data-preparation"><i class="bi bi-database db"></i>Data Preparation</a></li>
+        <li><a href="#EDA"><i class="bi bi-database db"></i>Exploratory Data Analysis</a></li>
+        <li><a href="#feature-selection"><i class="bi bi-filter ft"></i>Feature Selection</a></li>
+        <li><a href="#model-selection"><i class="bi bi-bullseye be"></i>Model Selection</a></li>
+        <li><a href="#validation"><i class="bi bi-patch-check check"></i>Validation</a></li>
+
+
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+      <img src="{{ url_for('static', filename='img/ist background.jpg') }}" alt="Background" class="hero-bg">
+      <div class="container" data-aos="fade-up">
+        <h2 class="matrix-title">South Tower Power Forecast</h2>
+        <div class="matrix-grid">
+          <a href="#data-preparation" class="matrix-cell">Data Preparation</a>
+          <a href="#EDA" class="matrix-cell">Exploratory Data Analysis</a>
+          <a href="#feature-selection" class="matrix-cell">Feature Selection</a>
+          <a href="#model-selection" class="matrix-cell">Model Selection</a>
+          <a href="#validation" class="matrix-cell">Validation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Preparation Section -->
+
+    <section id="data-preparation" class="section" style="padding-bottom: 0px; margin-bottom: 0px;">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Data Preparation</h2>
+        <p>After dealing with missing hours and duplicated hours of the power data, I merged the power data with the meteorological data. Looking at the data we can see that some data is missing. After the feature selection we can complete those that we want to use.</p>
+
+        <iframe src="/dash/" class="iframe-container"></iframe>
+      </div>
+    </section>
+
+
+    <!-- Exploratory Data Analysis Section -->
+
+    <section id="EDA" class="section" style="padding-bottom: 0px; margin-bottom: 0px; padding-top: 0;">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Exploratory Data Analysis</h2>
+        <p>After dealing with missing hours and duplicated hours of the power data, I merged the power data with the meteorological data. Looking at the data we can see that some data is missing. After the feature selection we can complete those that we want to use.</p>
+
+        <iframe src="/dash/boxplots/" class="iframe-container"></iframe>
+      </div>
+    </section>
+    
+
+    <!-- Feature Selection Section -->
+    <section id="feature-selection" class="section" style="padding-top: 0px; padding-bottom: 0;">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Feature Selection</h2>
+        <p>
+          In this section, I selected a subset of features from both the existing ones and those I added.
+        </p>
+        <p>
+          I evaluated their relevance using a variety of metrics, while also relying on intuition. The methods employed were:
+          <ul class="methods-list">
+            <li> Filter Methods (K-Best): F-Test and Mutual Information;</li>
+            <li> Wrapper Methods : Recursive Feature Elimination (RFE);</li>
+            <li> Ensemble Methods : Random Forest.</li>
+            
+          </ul>
+          Additionally, I analyzed the correlations among features to assess redundancy, as collinearity can be problematic in some models.
+        </p>
+        <p>
+          It's important to notice that even though some of them are getting bad scores with these methods is also good to select by trial and error. 
+          This way, for example the holiday feature, that gets bad scores, when we remove it we get bad metrics when we load the model, meaning that our intuiton that
+          the calendar academic is important was important and this feature should be considered.
+        </p>
+        <p>
+          Additionally, if we notice, some of the methods gives completetly different scores to the features, meaning that, more then just use this method, we
+          should <strong>always follow our intuition</strong>, considering that we have a good reasoning.
+        </p>
+        <p>
+          The final selected features were <strong>HR, solarRad_W/m2, Weekday, Hour_sin, Hour_cos, Power_kW_lag_1h, Power_kW_lag_2h, Power_kW_lag_24h, HDH, CDH_squared, CDH_Humidity, log_temp, holiday</strong>.
+        </p>
+           
+
+        {% include "features_selection.html" %}
+
+      </div>
+
+      
+
+    </section>
+
+    <!-- Model Selection Section -->
+    <section id="model-selection" class="section" style="padding-top: 0; padding-bottom: 0;">
+      <div class="container section-title" data-aos="fade-up">
+        <h2 style="margin-bottom: 0;">Model Selection</h2>
+        {% include "model_selection.html" %}
+
+      </div>
+    </section>
+
+    <!-- Validation Section -->
+    <section id="validation" class="section" style="padding-top: 0;" >
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Validation</h2>
+        {% include "validation.html" %}
+      </div>
+    </section>
+
+
+
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container">
+      <div class="copyright text-center">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Tomás Arêde</strong></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+ 
+ 
+
+</body>
+</html>

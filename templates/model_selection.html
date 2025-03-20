@@ -1,0 +1,134 @@
+<!-- model_selection.html -->
+
+
+  
+<section id="model-selection-content" style="margin-top: 0; padding-top: 20px;">
+          <p>
+            Based on our evaluation metrics, the optimal models are <strong>XGBoost</strong> and <strong>Bootstrapping</strong>. Both consistently exhibit lower error rates compared to alternatives, although the edge varies slightly depending on the metric. Given my familiarity with XGBoost, it stands out as the preferred choice.
+          </p>
+          <p>
+            While additional preprocessing—like standardizing data or reducing features—could refine the results further, the required effort would be substantial. Moreover, simpler models (e.g., AR, LR, SVR, GPR, and Decision Trees) often fall short in capturing intricate patterns, or they are computationally less efficient. In contrast, ensemble methods such as Random Forest and XGBoost, along with Neural Networks, excel at discerning complex relationships. Notably, Random Forest may not handle time dependencies effectively, and Bootstrapping generates independent models that lack collaborative learning.
+          </p>
+          <p>
+            In summary, <strong>XGBoost</strong> emerges as the ideal choice. Although Neural Networks are often favored for larger datasets, both <strong>XGBoost</strong> and <strong>Neural Networks</strong> will be the chosen models.
+          </p>
+      <div class="table-responsive" style="margin-top: 40px;">
+        <table class="table table-striped table-hover table-sm ">
+          <thead class="table-secondary">
+            <tr>
+              <th>Model</th>
+              <th>Pros</th>
+              <th>Cons</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DT</strong></td>
+              <td>
+                <ul>
+                  <li>Simple and interpretable</li>
+                  <li>Fast training</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Prone to overfitting</li>
+                  <li>Limited generalization</li>
+                </ul>
+              </td>
+              <td>Small datasets where interpretability is crucial</td>
+            </tr>
+            <tr>
+              <td><strong>RF</strong></td>
+              <td>
+                <ul>
+                  <li>Mitigates overfitting</li>
+                  <li>Captures nonlinear relationships</li>
+                  <li>Excels with tabular data</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Slower than a single Decision Tree</li>
+                  <li>More challenging to interpret</li>
+                </ul>
+              </td>
+              <td>Medium-sized datasets with structured features</td>
+            </tr>
+            <tr>
+              <td><strong>XGBoost</strong></td>
+              <td>
+                <ul>
+                  <li>High accuracy on structured data</li>
+                  <li>Robust to missing values</li>
+                  <li>Scalable to large datasets</li>
+                  <li>Faster than Random Forest</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Requires meticulous feature engineering</li>
+                  <li>Demands hyperparameter tuning</li>
+                </ul>
+              </td>
+              <td>Large datasets (e.g., 2 years of hourly data) with a balance of speed and precision</td>
+            </tr>
+            <tr>
+              <td><strong>SVR</strong></td>
+              <td>
+                <ul>
+                  <li>Effective for small datasets</li>
+                  <li>Handles nonlinear relationships well</li>
+                  <li>Resistant to outliers</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Computationally intensive for large datasets</li>
+                  <li>Complex tuning (kernel, C, epsilon)</li>
+                </ul>
+              </td>
+              <td>Small datasets with intricate relationships; not scalable</td>
+            </tr>
+            <tr>
+              <td><strong>GPR</strong></td>
+              <td>
+                <ul>
+                  <li>Provides reliable confidence intervals</li>
+                  <li>Highly flexible and precise</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Extremely slow and memory-intensive for large datasets</li>
+                  <li>Challenging to tune kernel functions</li>
+                </ul>
+              </td>
+              <td>Small datasets where uncertainty estimation is vital</td>
+            </tr>
+            <tr>
+              <td><strong>NN</strong></td>
+              <td>
+                <ul>
+                  <li>Excels at capturing deep patterns</li>
+                  <li>Performs well with large, complex datasets</li>
+                  <li>Capable of learning long-term dependencies</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Requires significant amounts of data</li>
+                  <li>Computationally expensive</li>
+                  <li>Less interpretable</li>
+                </ul>
+              </td>
+              <td>Large-scale datasets with complex relationships, especially for deep learning (e.g., LSTMs, Transformers)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+</section>
+  
