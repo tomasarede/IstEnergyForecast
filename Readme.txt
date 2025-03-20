@@ -3,7 +3,7 @@
 **Tomás Arêde**  
 📍 Instituto Superior Técnico Student | Energy Services Subject
 
-📧 **Email**: [tomas.arede@gmail.com](mailto:tomas.arede@example.com)  
+📧 **Email**: [tomas.arede@gmail.com](mailto:tomas.arede@gmail.com)  
 💼 **LinkedIn**: [linkedin.com/in/tomasarede](https://linkedin.com/in/tomasarede)  
 📂 **GitHub**: [github.com/TomasArede](https://github.com/tomasarede)  
 
