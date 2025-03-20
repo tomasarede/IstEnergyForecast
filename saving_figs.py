@@ -396,14 +396,14 @@ fig_validation_xgb.add_trace(go.Scatter(
     y=df_test["Power_kW"],
     mode='lines',
     name='True Values',
-    line=dict(color="royalblue")
+    line=dict(color="black")
 ))
 fig_validation_xgb.add_trace(go.Scatter(
     x=df_test["Date"],
     y=y_pred2019_XGB,
     mode='lines',
     name='Predicted (XGBoost)',
-    line=dict(color="darkorange")
+    line=dict(color="red")
 ))
 fig_validation_xgb.update_layout(
     title="XGBoost: True vs Predicted Power Consumption",
@@ -428,14 +428,14 @@ fig_validation_nn.add_trace(go.Scatter(
     y=df_test["Power_kW"],
     mode='lines',
     name='True Values',
-    line=dict(color="royalblue")
+    line=dict(color="black")
 ))
 fig_validation_nn.add_trace(go.Scatter(
     x=df_test["Date"],
     y=y_pred_NN_orig.flatten(),
     mode='lines',
     name='Predicted (Neural Network)',
-    line=dict(color="darkorange")
+    line=dict(color="red")
 ))
 
 

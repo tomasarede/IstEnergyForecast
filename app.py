@@ -1,8 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import pandas as pd
 import plotly.graph_objects as go
-import plotly.express as px
-from plotly.subplots import make_subplots
 import dash
 from dash import dcc, html, Input, Output
 from datetime import timedelta
@@ -11,6 +9,8 @@ import base64
 import google.generativeai as genai
 from PIL import Image, ImageOps
 from io import BytesIO
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
@@ -77,61 +77,6 @@ def update_graph(feature):
         yaxis_title=feature,
         template="seaborn",
         xaxis=dict(rangeslider=dict(visible=True))
-    )
-    return fig
-
-
-
-
-
-#-------------------------------
-# Dash app for EDA
-#-------------------------------
-
-
-df_box = df.drop(columns=["Date_start"])
-available_features = df_box.columns.tolist()
-
-
-dash_boxplots = dash.Dash(
-    __name__,
-    server=app,  
-    url_base_pathname="/dash/boxplots/",
-    external_stylesheets=external_stylesheets  
-)
-
-dash_boxplots.layout = html.Div([
-    dcc.Dropdown(
-        id="boxplot-dropdown",
-        options=[{"label": feature, "value": feature} for feature in available_features],
-        value=available_features[0], 
-        multi=False,  
-        placeholder="Select a feature...",
-        style={"width": "50%", "fontFamily": "var(--default-font)"}
-
-    ),
-    dcc.Graph(id="boxplot-graph")
-], style={"padding": "20px", "fontFamily": "var(--default-font)"})
-
-@dash_boxplots.callback(
-    Output("boxplot-graph", "figure"),
-    [Input("boxplot-dropdown", "value")]
-)
-def update_boxplot(selected_feature):
-    if not selected_feature:
-        return go.Figure()  
-
-    fig = go.Figure()
-    fig.add_trace(go.Box(
-        y=df_box[selected_feature].dropna(),
-        name=selected_feature,
-        marker=dict(color='royalblue')
-    ))
-
-    fig.update_layout(
-        title=f"Box Plot for {selected_feature}",
-        yaxis_title="Values",
-        template="seaborn"
     )
     return fig
 
@@ -501,7 +446,9 @@ dash_app_validation_nn.layout = html.Div(
 # GEMINI PART
 # --------------
 
-GEMINI_API_KEY ="AIzaSyAKyIXA_j0EZZ9mxPovSVOfQ8ijDT7G0lY"
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 def encode_image(image_path):

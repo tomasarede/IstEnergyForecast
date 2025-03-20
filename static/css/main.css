@@ -528,8 +528,8 @@ section,
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 40px; /* Increased space between cells */
-  width: 450px; /* Default size for larger screens */
+  gap: 40px; 
+  width: 450px; 
   height: 450px;
   margin: auto;
   margin-top: 40px;
@@ -541,7 +541,7 @@ section,
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: #040b14c0 ;/* Darker transparent background */
+  background: #040b14c0 ;
   color: white;
   font-size: 22px;
   font-weight: bold;
@@ -549,45 +549,45 @@ section,
   transition: background 0.3s, transform 0.2s;
   width: 100%;
   height: 100%;
-  border-radius: 25px; /* More rounded borders */
-  border: 2px solid rgba(255, 255, 255, 0.3); /* Subtle border effect */
+  border-radius: 25px; 
+  border: 2px solid rgba(255, 255, 255, 0.3); 
 }
 
 /* Hover Effect */
 .matrix-cell:hover {
   background: #040b14;
   color : white;
-  transform: scale(1.05); /* Slight enlargement */
+  transform: scale(1.05); 
 }
 
 h1
 
 /* Responsive Design */
-@media (max-width: 768px) { /* Tablets & smaller screens */
+@media (max-width: 768px) { 
   .matrix-grid {
-    width: 350px; /* Smaller grid */
+    width: 350px; 
     height: 350px;
-    gap: 20px; /* Less space */
+    gap: 20px; 
   }
 
   .matrix-cell {
-    font-size: 18px; /* Smaller text */
+    font-size: 18px; 
     border-radius: 20px;
   }
 }
 
-@media (max-width: 480px) { /* Mobile screens */
+@media (max-width: 480px) { 
   .matrix-grid {
-    grid-template-columns: 1fr; /* Single column layout */
+    grid-template-columns: 1fr; 
     grid-template-rows: auto;
-    width: 90%; /* Make it fluid */
+    width: 90%; 
     height: auto;
     gap: 15px;
   }
 
   .matrix-cell {
     padding: 20px;
-    height: 80px; /* Fixed height for mobile */
+    height: 80px; 
     font-size: 16px;
     border-radius: 15px;
   }
