@@ -3,12 +3,14 @@
 **Tomás Arêde**  
 📍 Instituto Superior Técnico Student | Energy Services Subject
 
-📧 **Email**: [tomas.arede@gmail.com](mailto:tomas.arede@gmail.com)  
+📧 **Email**: [tomas.arede@gmail.com](mailto:tomas.arede@example.com)  
 💼 **LinkedIn**: [linkedin.com/in/tomasarede](https://linkedin.com/in/tomasarede)  
 📂 **GitHub**: [github.com/TomasArede](https://github.com/tomasarede)  
 
 
 # IST Energy Forecast ⚡🌍
+
+![IST Energy Forecast](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
 
 ## 🌍 Scientific Overview
 This project systematically prepares and analyzes the energy consumption data of the **South Tower** of **Instituto Superior Técnico (IST)** for the years **2017 and 2018**. The methodology follows a structured **data-driven approach**, including:
@@ -64,7 +66,7 @@ A **dynamic, user-friendly dashboard** was developed to visualize energy consump
 ```sh
 git clone https://github.com/yourusername/IST-Energy-Forecast.git
 cd IST-Energy-Forecast
-```
+
 
 
 
