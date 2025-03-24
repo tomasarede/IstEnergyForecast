@@ -13,7 +13,7 @@ import os
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-
+server = app.server
 # ----------------------------
 # Data Loading & Preparation
 # ----------------------------
@@ -547,4 +547,4 @@ def ai_generate():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run_server()
