@@ -13,7 +13,6 @@ import os
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-server = app.server
 # ----------------------------
 # Data Loading & Preparation
 # ----------------------------
@@ -546,5 +545,4 @@ def ai_generate():
         return jsonify({"analysis": "Image resizing failed."}), 500
 
 
-if __name__ == "__main__":
-    app.run_server()
+
