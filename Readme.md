@@ -66,7 +66,7 @@ A **dynamic, user-friendly dashboard** was developed to visualize energy consump
 ```sh
 git clone https://github.com/yourusername/IST-Energy-Forecast.git
 cd IST-Energy-Forecast
-
+Run app.py
 
 
 
