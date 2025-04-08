@@ -1,6 +1,6 @@
 ## 👨‍💻 Author
 
-**Tomás Arêde**  
+**Tomás Arêde Martins São Miguel**  
 📍 Instituto Superior Técnico Student | Energy Services Subject
 
 📧 **Email**: [tomas.arede@gmail.com](mailto:tomas.arede@example.com)  
